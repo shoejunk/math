@@ -1,5 +1,6 @@
 #pragma once
 
+#include <bitset>
 #include <cstdint>
 #include <random>
 
@@ -65,7 +66,7 @@ namespace NStk::NMath
 	{
 	public:
 		CRandom() : m_oEngine(m_oDevice()) {}
-		template<class T> 
+		template<class T>
 		T RandomInt(T iMin, T iMax)
 		{
 			if (iMin > iMax)
@@ -90,4 +91,29 @@ namespace NStk::NMath
 		std::random_device m_oDevice;
 		std::mt19937 m_oEngine;
 	};
+
+	template<size_t uBits>
+	constexpr std::bitset<uBits + 1> AddBits(std::bitset<uBits> const& kBitsA, std::bitset<uBits> const& kBitsB)
+	{
+		std::bitset<uBits + 1> bitsRes;
+		uint32_t uCarry = 0;
+		for (size_t i = 0; i < uBits; ++i)
+		{
+			uint32_t uCarryNext = 0;
+			if ((kBitsA[i] & kBitsB[i]) || (uCarry & (kBitsA[i] | kBitsB[i])))
+			{
+				uCarryNext = 1;
+			}
+
+			bitsRes[i] = (kBitsA[i] ^ kBitsB[i]) ^ uCarry;
+			uCarry = uCarryNext;
+		}
+
+		if (uCarry)
+		{
+			bitsRes.set(uBits);
+		}
+
+		return bitsRes;
+	}
 }

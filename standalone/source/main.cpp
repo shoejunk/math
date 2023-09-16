@@ -1,5 +1,7 @@
 #include <math/math.h>
+#include <math/sort.h>
 
+#include <cassert>
 #include <cstdlib>
 #include <iostream>
 
@@ -51,5 +53,21 @@ int main(int argc, char* argv[])
 		std::cout << "Enter \"NextPrime <X>\" to find the next prime that comes after X." << std::endl;
 		std::cout << "Enter \"Random <Seed> <Max>\" to find a random number with the given Seed in the range [0, Max)." << std::endl;
 	}
+
+	int32_t aiTest[] = { 5, 4, 4, 8, 2, -1, 0, 3, 10, 9, 7, 6, 1, 2, 3, 4, 5, 6, 7, 8 };
+	auto iSize = sizeof(aiTest) / sizeof(int32_t);
+	int32_t aiTestSorted[] = { 10, 9, 8, 8, 7, 7, 6, 6, 5, 5, 4, 4, 4, 3, 3, 2, 2, 1, 0, -1 };
+	auto iSizeSorted = sizeof(aiTestSorted) / sizeof(int32_t);
+
+	NMath::InsertionSortDecreasing(aiTest, iSize);
+
+	assert(NMath::Match(aiTestSorted, iSizeSorted, aiTest, iSize));
+
+	assert(NMath::AddBits(std::bitset<1>{ 0 }, std::bitset<1>{ 0 }) == std::bitset<2>{ 0 });
+	assert(NMath::AddBits(std::bitset<1>{ 0 }, std::bitset<1>{ 1 }) == std::bitset<2>{ 1 });
+	assert(NMath::AddBits(std::bitset<1>{ 1 }, std::bitset<1>{ 0 }) == std::bitset<2>{ 1 });
+	auto bitsRes = NMath::AddBits(std::bitset<2>("11"), std::bitset<2>("11"));
+	assert(bitsRes == std::bitset<3>("110"));
+
 	return 0;
 }
