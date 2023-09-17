@@ -1,9 +1,7 @@
-#include <math/math.h>
-#include <math/sort.h>
+#include <assert.h>
 
-#include <cassert>
-#include <cstdlib>
-#include <iostream>
+import stk.math;
+import std.core;
 
 using namespace NStk;
 
@@ -52,6 +50,8 @@ int main(int argc, char* argv[])
 	{
 		std::cout << "Enter \"NextPrime <X>\" to find the next prime that comes after X." << std::endl;
 		std::cout << "Enter \"Random <Seed> <Max>\" to find a random number with the given Seed in the range [0, Max)." << std::endl;
+		std::cout << "Enter \"RandomInt <Min> <Max>\" to find a random int in the range [Min, Max]." << std::endl;
+		std::cout << "Enter \"RandomReal <Min> <Max>\" to find a random number in the range from Min to Max." << std::endl;
 	}
 
 	int32_t aiTest[] = { 5, 4, 4, 8, 2, -1, 0, 3, 10, 9, 7, 6, 1, 2, 3, 4, 5, 6, 7, 8 };

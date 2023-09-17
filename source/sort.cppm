@@ -1,8 +1,8 @@
-#pragma once
+export module stk.math:sort;
 
-#include <cstdint>
+import std.core;
 
-namespace NStk::NMath
+export namespace NStk::NMath
 {
 	constexpr void InsertionSortDecreasing(int32_t* aiArr, int32_t iSize)
 	{

@@ -1,10 +1,9 @@
-#pragma once
+export module stk.math;
+export import :sort;
 
-#include <bitset>
-#include <cstdint>
-#include <random>
+import std.core;
 
-namespace NStk::NMath
+export namespace NStk::NMath
 {
 	// Returns the next prime number after uX. Returns 0 if there is no prime number after uX that fits in a uint32_t.
 	constexpr uint32_t NextPrime(uint32_t uX)
