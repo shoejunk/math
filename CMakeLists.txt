@@ -1,12 +1,12 @@
-# Math
+# math
 
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
 # ---- Project ----
 
 project(
-	Math
-	VERSION 2.0.0
+	math
+	VERSION 3.0.0
 	LANGUAGES CXX)
 
 # ---- Fetch CPM ----
@@ -26,7 +26,7 @@ include(${CPM_DOWNLOAD_LOCATION})
 CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.8.0")
 
 # ---- Add source files ----
-file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cppm")
+file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*.ixx")
 
 # ---- Create library ----
 
