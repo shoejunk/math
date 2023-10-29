@@ -100,4 +100,88 @@ export namespace stk
 		std::random_device m_device;
 		std::mt19937 m_engine;
 	};
+
+	template<class T>
+	class c_vec2
+	{
+	public:
+		c_vec2() : x(0), y(0) {}
+		c_vec2(T x, T y) : x(x), y(y) {}
+
+		c_vec2<T> operator+(const c_vec2<T>& other) const
+		{
+			return c_vec2<T>(x + other.x, y + other.y);
+		}
+
+		c_vec2<T> operator-(const c_vec2<T>& other) const
+		{
+			return c_vec2<T>(x - other.x, y - other.y);
+		}
+
+		c_vec2<T> operator*(const c_vec2<T>& other) const
+		{
+			return c_vec2<T>(x * other.x, y * other.y);
+		}
+
+		c_vec2<T> operator/(const c_vec2<T>& other) const
+		{
+			return c_vec2<T>(x / other.x, y / other.y);
+		}
+
+		c_vec2<T> operator*(T scalar) const
+		{
+			return c_vec2<T>(x * scalar, y * scalar);
+		}
+
+		c_vec2<T> operator/(T scalar) const
+		{
+			return c_vec2<T>(x / scalar, y / scalar);
+		}
+
+		c_vec2<T>& operator+=(const c_vec2<T>& other)
+		{
+			x += other.x;
+			y += other.y;
+			return *this;
+		}
+
+		c_vec2<T>& operator-=(const c_vec2<T>& other)
+		{
+			x -= other.x;
+			y -= other.y;
+			return *this;
+		}
+
+		c_vec2<T>& operator*=(const c_vec2<T>& other)
+		{
+			x *= other.x;
+			y *= other.y;
+			return *this;
+		}
+
+		c_vec2<T>& operator/=(const c_vec2<T>& other)
+		{
+			x /= other.x;
+			y /= other.y;
+			return *this;
+		}
+
+		c_vec2<T>& operator*=(T scalar)
+		{
+			x *= scalar;
+			y *= scalar;
+			return *this;
+		}
+
+		c_vec2<T>& operator/=(T scalar)
+		{
+			x /= scalar;
+			y /= scalar;
+			return *this;
+		}
+
+	private:
+		T x;
+		T y;
+	};
 }
