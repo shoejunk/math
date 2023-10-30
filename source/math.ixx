@@ -184,4 +184,6 @@ export namespace stk
 		T x;
 		T y;
 	};
+
+	using c_vec2i = c_vec2<int32_t>;
 }
