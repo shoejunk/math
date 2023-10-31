@@ -106,83 +106,90 @@ export namespace stk
 	{
 	public:
 		c_vec2() : x(0), y(0) {}
-		c_vec2(T x, T y) : x(x), y(y) {}
+		c_vec2(T x, T y) : m_x(x), m_y(y) {}
+
+		T x() const { return m_x; }
+		T y() const { return m_y; }
+		T& x() { return m_x; }
+		T& y() { return m_y; }
+		void x(T x) { m_x = x; }
+		void y(T Y) { m_y = y; }
 
 		c_vec2<T> operator+(const c_vec2<T>& other) const
 		{
-			return c_vec2<T>(x + other.x, y + other.y);
+			return c_vec2<T>(m_x + other.m_x, m_y + other.m_y);
 		}
 
 		c_vec2<T> operator-(const c_vec2<T>& other) const
 		{
-			return c_vec2<T>(x - other.x, y - other.y);
+			return c_vec2<T>(m_x - other.m_x, m_y - other.m_y);
 		}
 
 		c_vec2<T> operator*(const c_vec2<T>& other) const
 		{
-			return c_vec2<T>(x * other.x, y * other.y);
+			return c_vec2<T>(m_x * other.m_x, m_y * other.m_y);
 		}
 
 		c_vec2<T> operator/(const c_vec2<T>& other) const
 		{
-			return c_vec2<T>(x / other.x, y / other.y);
+			return c_vec2<T>(m_x / other.m_x, m_y / other.m_y);
 		}
 
 		c_vec2<T> operator*(T scalar) const
 		{
-			return c_vec2<T>(x * scalar, y * scalar);
+			return c_vec2<T>(m_x * scalar, m_y * scalar);
 		}
 
 		c_vec2<T> operator/(T scalar) const
 		{
-			return c_vec2<T>(x / scalar, y / scalar);
+			return c_vec2<T>(m_x / scalar, m_y / scalar);
 		}
 
 		c_vec2<T>& operator+=(const c_vec2<T>& other)
 		{
-			x += other.x;
-			y += other.y;
+			m_x += other.m_x;
+			m_y += other.m_y;
 			return *this;
 		}
 
 		c_vec2<T>& operator-=(const c_vec2<T>& other)
 		{
-			x -= other.x;
-			y -= other.y;
+			m_x -= other.m_x;
+			m_y -= other.m_y;
 			return *this;
 		}
 
 		c_vec2<T>& operator*=(const c_vec2<T>& other)
 		{
-			x *= other.x;
-			y *= other.y;
+			m_x *= other.m_x;
+			m_y *= other.m_y;
 			return *this;
 		}
 
 		c_vec2<T>& operator/=(const c_vec2<T>& other)
 		{
-			x /= other.x;
-			y /= other.y;
+			m_x /= other.m_x;
+			m_y /= other.m_y;
 			return *this;
 		}
 
 		c_vec2<T>& operator*=(T scalar)
 		{
-			x *= scalar;
-			y *= scalar;
+			m_x *= scalar;
+			m_y *= scalar;
 			return *this;
 		}
 
 		c_vec2<T>& operator/=(T scalar)
 		{
-			x /= scalar;
-			y /= scalar;
+			m_x /= scalar;
+			m_y /= scalar;
 			return *this;
 		}
 
 	private:
-		T x;
-		T y;
+		T m_x;
+		T m_y;
 	};
 
 	using c_vec2i = c_vec2<int32_t>;
