@@ -128,6 +128,11 @@ export namespace stk
 			return c_vec2<T>(m_x - other.m_x, m_y - other.m_y);
 		}
 
+		c_vec2<T> operator-() const
+		{
+			return c_vec2<T>(-m_x, -m_y);
+		}
+
 		c_vec2<T> operator*(const c_vec2<T>& other) const
 		{
 			return c_vec2<T>(m_x * other.m_x, m_y * other.m_y);
