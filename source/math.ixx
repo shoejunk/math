@@ -108,6 +108,9 @@ export namespace stk
 		c_vec2() : x(0), y(0) {}
 		c_vec2(T x, T y) : m_x(x), m_y(y) {}
 
+		template<typename U>
+		c_vec2(const c_vec2<U>& other) : m_x(static_cast<T>(other.x())), m_y(static_cast<T>(other.y())) {}
+
 		T x() const { return m_x; }
 		T y() const { return m_y; }
 		T& x() { return m_x; }

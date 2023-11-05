@@ -63,5 +63,8 @@ int main(int argc, char* argv[])
 	int32_t test_sorted[] = { 10, 9, 8, 8, 7, 7, 6, 6, 5, 5, 4, 4, 4, 3, 3, 2, 2, 1, 0, -1 };
 	auto size_sorted = sizeof(test_sorted) / sizeof(int32_t);
 
+	c_vec2i v1(1, 2);
+	c_vec2f v2 = c_vec2f(v1);
+
 	return 0;
 }
