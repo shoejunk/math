@@ -193,4 +193,5 @@ export namespace stk
 	};
 
 	using c_vec2i = c_vec2<int32_t>;
+	using c_vec2f = c_vec2<float>;
 }
