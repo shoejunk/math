@@ -105,7 +105,7 @@ export namespace stk
 	class c_vec2
 	{
 	public:
-		c_vec2() : x(0), y(0) {}
+		c_vec2() : m_x(0), m_y(0) {}
 		c_vec2(T x, T y) : m_x(x), m_y(y) {}
 
 		template<typename U>
