@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 		{
 			auto min = atoi(argv[2]);
 			auto max = atoi(argv[3]);
-			stk::rand r;
+			stk::c_rand r;
 			auto r_int = r.rand_int(min, max);
 			std::cout << r_int << std::endl;
 		}
@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 		{
 			auto min = atof(argv[2]);
 			auto max = atof(argv[3]);
-			stk::rand r;
+			stk::c_rand r;
 			auto r_float = r.rand_float(min, max);
 			std::cout << r_float << std::endl;
 		}

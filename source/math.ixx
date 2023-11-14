@@ -53,7 +53,7 @@ export namespace stk
 
 	// constexpr and deterministic random number generator.
 	template<class T>
-	constexpr T det_rand_int(T seed, T max)
+	constexpr T det_rand_int(T seed, T max = std::numeric_limits<T>::max())
 	{
 		static_assert(std::is_integral_v<T>, "T must be an integral type");
 		if (max == 0)
@@ -67,13 +67,13 @@ export namespace stk
 	static_assert(det_rand_int<uint32_t>(1, 10000) == 8748);
 
 	// Uses the device to generate a non-deterministic random number
-	class rand
+	class c_rand
 	{
 	public:
-		rand() : m_engine(m_device()) {}
+		c_rand() : m_engine(m_device()) {}
 
 		template<class T>
-		T rand_int(T min, T max)
+		T rand_int(T min = std::numeric_limits<T>::min(), T max = std::numeric_limits<T>::max())
 		{
 			static_assert(std::is_integral_v<T>, "T must be an integral type");
 			if (min > max)
