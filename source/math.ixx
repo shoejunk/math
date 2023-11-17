@@ -202,4 +202,41 @@ export namespace stk
 
 	using c_vec2i = c_vec2<int32_t>;
 	using c_vec2f = c_vec2<float>;
+
+	class c_rot
+	{
+	public:
+		c_rot()
+			: m_angle(0)
+		{
+		}
+
+		c_rot(int16_t angle)
+			: m_angle(angle)
+		{
+		}
+
+		int16_t angle() const
+		{
+			return m_angle;
+		}
+
+		int16_t& angle()
+		{
+			return m_angle;
+		}
+
+		float angle_rad() const
+		{
+			return (float)m_angle * numbers::pi_v<float> *2.f / (float)std::numeric_limits<int16_t>::max();
+		}
+
+		float angle_deg() const
+		{
+			return (float)m_angle * 360 / (float)std::numeric_limits<int16_t>::max();
+		}
+
+	private:
+		int16_t m_angle;
+	};
 }
