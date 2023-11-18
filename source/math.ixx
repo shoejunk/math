@@ -228,7 +228,7 @@ export namespace stk
 
 		float angle_rad() const
 		{
-			return (float)m_angle * numbers::pi_v<float> *2.f / (float)std::numeric_limits<int16_t>::max();
+			return (float)m_angle * std::numbers::pi_v<float> *2.f / (float)std::numeric_limits<int16_t>::max();
 		}
 
 		float angle_deg() const
