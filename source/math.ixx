@@ -205,15 +205,32 @@ export namespace stk
 
 	class c_rot
 	{
+	private:
+		static constexpr int16_t deg_0 = 0;
+		static constexpr int16_t deg_1 = 128;
+		static constexpr int16_t deg_180 = 23040;
+		static constexpr int16_t wrap(int16_t angle)
+		{
+			if (angle < -deg_180)
+			{
+				return angle + deg_180 + deg_180;
+			}
+			else if (angle > deg_180)
+			{
+				return angle - deg_180 - deg_180;
+			}
+			return angle;
+		}
+
 	public:
 		static c_rot from_rad(float angle_rad)
 		{
-			return (int16_t)(angle_rad * (float)std::numeric_limits<int16_t>::max() / (std::numbers::pi_v<float> * 2.f));
+			return (int16_t)(angle_rad * (float)deg_180 / std::numbers::pi_v<float>);
 		}
 
 		static c_rot from_deg(float angle_deg)
 		{
-			return (int16_t)(angle_deg * (float)std::numeric_limits<int16_t>::max() / 360.f);
+			return (int16_t)(angle_deg * (float)deg_1);
 		}
 
 	public:
@@ -239,27 +256,32 @@ export namespace stk
 
 		float angle_rad() const
 		{
-			return (float)m_angle * std::numbers::pi_v<float> * 2.f / (float)std::numeric_limits<int16_t>::max();
+			return (float)m_angle * std::numbers::pi_v<float> / (float)deg_180;
 		}
 
 		float angle_deg() const
 		{
-			return (float)m_angle * 360 / (float)std::numeric_limits<int16_t>::max();
+			return (float)m_angle / (float)deg_1;
 		}
 
 		void set_rad(float angle_rad)
 		{
-			m_angle = (int16_t)(angle_rad * (float)std::numeric_limits<int16_t>::max() / (std::numbers::pi_v<float> * 2.f));
+			m_angle = (int16_t)(angle_rad * (float)deg_180 / std::numbers::pi_v<float>);
 		}
 
 		void set_deg(float angle_deg)
 		{
-			m_angle = (int16_t)(angle_deg * (float)std::numeric_limits<int16_t>::max() / 360.f);
+			m_angle = (int16_t)(angle_deg * (float)deg_1);
 		}
 
-		bool operator==(const c_rot& other) const
+		bool operator==(c_rot const& other) const
 		{
 			return m_angle == other.m_angle;
+		}
+
+		c_rot operator+(c_rot const& other) const
+		{
+			return c_rot(wrap(m_angle + other.m_angle));
 		}
 
 	private:
