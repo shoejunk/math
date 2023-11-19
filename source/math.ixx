@@ -205,10 +205,14 @@ export namespace stk
 
 	class c_rot
 	{
-	private:
+	public:
 		static constexpr int16_t deg_0 = 0;
 		static constexpr int16_t deg_1 = 128;
-		static constexpr int16_t deg_180 = 23040;
+		static constexpr int16_t deg_45 = deg_1 * 45;
+		static constexpr int16_t deg_90 = deg_1 * 90;
+		static constexpr int16_t deg_180 = deg_1 * 180;
+
+	private:
 		static constexpr int16_t wrap(int16_t angle)
 		{
 			if (angle < -deg_180)
