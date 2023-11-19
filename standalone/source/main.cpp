@@ -66,5 +66,9 @@ int main(int argc, char* argv[])
 	c_vec2i v1(1, 2);
 	c_vec2f v2 = c_vec2f(v1);
 
+	c_rot angle = c_rot::from_deg(90.0f);
+	c_rot angle2 = c_rot::from_rad(std::numbers::pi_v<float> / 2.0f);
+	assert(angle == angle2);
+
 	return 0;
 }

@@ -206,6 +206,17 @@ export namespace stk
 	class c_rot
 	{
 	public:
+		static c_rot from_rad(float angle_rad)
+		{
+			return (int16_t)(angle_rad * (float)std::numeric_limits<int16_t>::max() / (std::numbers::pi_v<float> * 2.f));
+		}
+
+		static c_rot from_deg(float angle_deg)
+		{
+			return (int16_t)(angle_deg * (float)std::numeric_limits<int16_t>::max() / 360.f);
+		}
+
+	public:
 		c_rot()
 			: m_angle(0)
 		{
@@ -228,12 +239,27 @@ export namespace stk
 
 		float angle_rad() const
 		{
-			return (float)m_angle * std::numbers::pi_v<float> *2.f / (float)std::numeric_limits<int16_t>::max();
+			return (float)m_angle * std::numbers::pi_v<float> * 2.f / (float)std::numeric_limits<int16_t>::max();
 		}
 
 		float angle_deg() const
 		{
 			return (float)m_angle * 360 / (float)std::numeric_limits<int16_t>::max();
+		}
+
+		void set_rad(float angle_rad)
+		{
+			m_angle = (int16_t)(angle_rad * (float)std::numeric_limits<int16_t>::max() / (std::numbers::pi_v<float> * 2.f));
+		}
+
+		void set_deg(float angle_deg)
+		{
+			m_angle = (int16_t)(angle_deg * (float)std::numeric_limits<int16_t>::max() / 360.f);
+		}
+
+		bool operator==(const c_rot& other) const
+		{
+			return m_angle == other.m_angle;
 		}
 
 	private:
