@@ -105,11 +105,11 @@ export namespace stk
 	class c_vec2
 	{
 	public:
-		c_vec2() : m_x(0), m_y(0) {}
-		c_vec2(T x, T y) : m_x(x), m_y(y) {}
+		constexpr c_vec2() : m_x(0), m_y(0) {}
+		constexpr c_vec2(T x, T y) : m_x(x), m_y(y) {}
 
 		template<typename U>
-		c_vec2(const c_vec2<U>& other) : m_x(static_cast<T>(other.x())), m_y(static_cast<T>(other.y())) {}
+		constexpr c_vec2(const c_vec2<U>& other) : m_x(static_cast<T>(other.x())), m_y(static_cast<T>(other.y())) {}
 
 		T x() const { return m_x; }
 		T y() const { return m_y; }
@@ -207,12 +207,10 @@ export namespace stk
 	{
 	public:
 		static constexpr int16_t deg_0 = 0;
-		static constexpr int16_t deg_1 = 128;
+		static constexpr int16_t deg_1 = 64;
 		static constexpr int16_t deg_45 = deg_1 * 45;
 		static constexpr int16_t deg_90 = deg_1 * 90;
 		static constexpr int16_t deg_180 = deg_1 * 180;
-
-	private:
 		static constexpr int16_t wrap(int16_t angle)
 		{
 			if (angle < -deg_180)
@@ -226,7 +224,6 @@ export namespace stk
 			return angle;
 		}
 
-	public:
 		static c_rot from_rad(float angle_rad)
 		{
 			return (int16_t)(angle_rad * (float)deg_180 / std::numbers::pi_v<float>);
@@ -281,6 +278,11 @@ export namespace stk
 		bool operator==(c_rot const& other) const
 		{
 			return m_angle == other.m_angle;
+		}
+
+		bool operator!=(c_rot const& other) const
+		{
+			return m_angle != other.m_angle;
 		}
 
 		c_rot operator+(c_rot const& other) const
