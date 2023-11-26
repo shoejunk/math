@@ -293,4 +293,10 @@ export namespace stk
 	private:
 		int16_t m_angle;
 	};
+
+	bool overlaps(c_vec2i a_center, c_vec2i a_extents, c_vec2i b_center, c_vec2i b_extents)
+	{
+		return std::abs(a_center.x() - b_center.x()) < a_extents.x() / 2 + b_extents.x() / 2
+			&& std::abs(a_center.y() - b_center.y()) < a_extents.y() / 2 + b_extents.y() / 2;
+	}
 }
