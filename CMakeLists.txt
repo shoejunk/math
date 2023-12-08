@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
 project(
 	math
-	VERSION 4.6.0
+	VERSION 4.7.0
 	LANGUAGES CXX)
 
 # ---- Fetch CPM ----

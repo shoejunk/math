@@ -208,22 +208,9 @@ export namespace stk
 	{
 	public:
 		static constexpr int16_t deg_0 = 0;
-		static constexpr int16_t deg_1 = 64;
-		static constexpr int16_t deg_45 = deg_1 * 45;
-		static constexpr int16_t deg_90 = deg_1 * 90;
-		static constexpr int16_t deg_180 = deg_1 * 180;
-		static constexpr int16_t wrap(int16_t angle)
-		{
-			if (angle < -deg_180)
-			{
-				return angle + deg_180 + deg_180;
-			}
-			else if (angle > deg_180)
-			{
-				return angle - deg_180 - deg_180;
-			}
-			return angle;
-		}
+		static constexpr int16_t deg_45 = 8192;
+		static constexpr int16_t deg_90 = 16384;
+		static constexpr int32_t deg_180 = 32768;
 
 		static c_rot from_rad(float angle_rad)
 		{
@@ -232,7 +219,7 @@ export namespace stk
 
 		static c_rot from_deg(float angle_deg)
 		{
-			return (int16_t)(angle_deg * (float)deg_1);
+			return (int16_t)(angle_deg * (float)deg_45 / 45.f);
 		}
 
 	public:
@@ -263,7 +250,7 @@ export namespace stk
 
 		float angle_deg() const
 		{
-			return (float)m_angle / (float)deg_1;
+			return (float)m_angle / (float)deg_45 * 45.f;
 		}
 
 		void set_rad(float angle_rad)
@@ -273,7 +260,7 @@ export namespace stk
 
 		void set_deg(float angle_deg)
 		{
-			m_angle = (int16_t)(angle_deg * (float)deg_1);
+			m_angle = (int16_t)(angle_deg * (float)deg_45 / 45.f);
 		}
 
 		bool operator==(c_rot const& other) const
@@ -288,7 +275,7 @@ export namespace stk
 
 		c_rot operator+(c_rot const& other) const
 		{
-			return c_rot(wrap(m_angle + other.m_angle));
+			return c_rot(m_angle + other.m_angle);
 		}
 
 	private:

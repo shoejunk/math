@@ -65,15 +65,15 @@ int main(int argc, char* argv[])
 	c_rot angle = c_rot::from_deg(90.f);
 	c_rot angle2 = c_rot::from_rad(std::numbers::pi_v<float> / 2.f);
 	c_rot angle3 = c_rot::from_deg(180.f);
+	c_rot angle4 = c_rot::from_rad(std::numbers::pi_v<float>);
 	assert(angle == angle2);
 	assert(angle + angle2 == angle3);
+	assert(angle3 == angle4);
 
 	// True Reals:
 	c_true_real tr1(std::numeric_limits<uint64_t>::max());
 	c_true_real tr2(1);
 	c_true_real tr3 = tr1 + tr2;
 	tr3.print();
-	std::string boop;
-	std::cin >> boop;
 	return 0;
 }
