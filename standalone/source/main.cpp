@@ -1,11 +1,7 @@
 #include <assert.h>
 
 import stk.math;
-
-#pragma warning(push)
-#pragma warning(disable: 5050) // _M_FP_PRECISE is defined in current command line and not in module command line
 import std.core;
-#pragma warning(pop)
 
 using namespace stk;
 
@@ -72,5 +68,12 @@ int main(int argc, char* argv[])
 	assert(angle == angle2);
 	assert(angle + angle2 == angle3);
 
+	// True Reals:
+	c_true_real tr1(std::numeric_limits<uint64_t>::max());
+	c_true_real tr2(1);
+	c_true_real tr3 = tr1 + tr2;
+	tr3.print();
+	std::string boop;
+	std::cin >> boop;
 	return 0;
 }
