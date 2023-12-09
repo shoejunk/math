@@ -1,7 +1,8 @@
 #include <assert.h>
 
-import stk.math;
 import std.core;
+import stk.log;
+import stk.math;
 
 using namespace stk;
 
@@ -72,8 +73,9 @@ int main(int argc, char* argv[])
 
 	// True Reals:
 	c_true_real tr1(std::numeric_limits<uint64_t>::max());
+	debugln("tr1: {}", tr1);
 	c_true_real tr2(1);
 	c_true_real tr3 = tr1 + tr2;
-	tr3.print();
+	debugln("tr3: {}", tr3);
 	return 0;
 }
