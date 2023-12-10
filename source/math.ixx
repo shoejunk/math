@@ -1,10 +1,8 @@
 export module stk.math;
 export import :true_real;
 
-#pragma warning(push)
-#pragma warning(disable: 5050) // _M_FP_PRECISE is defined in current command line and not in module command line
 import std.core;
-#pragma warning(pop)
+import "gcem.hpp";
 
 export namespace stk
 {
@@ -112,12 +110,12 @@ export namespace stk
 		template<typename U>
 		constexpr c_vec2(const c_vec2<U>& other) : m_x(static_cast<T>(other.x())), m_y(static_cast<T>(other.y())) {}
 
-		T x() const { return m_x; }
-		T y() const { return m_y; }
-		T& x() { return m_x; }
-		T& y() { return m_y; }
+		constexpr T x() const { return m_x; }
+		constexpr T y() const { return m_y; }
+		constexpr T& x() { return m_x; }
+		constexpr T& y() { return m_y; }
 		void x(T x) { m_x = x; }
-		void y(T Y) { m_y = y; }
+		void y(T y) { m_y = y; }
 
 		c_vec2<T> operator+(const c_vec2<T>& other) const
 		{
@@ -196,6 +194,11 @@ export namespace stk
 			return *this;
 		}
 
+		constexpr bool operator==(const c_vec2<T>& rhs) const
+		{
+			return m_x == rhs.m_x && m_y == rhs.m_y;
+		}
+
 	private:
 		T m_x;
 		T m_y;
@@ -212,45 +215,45 @@ export namespace stk
 		static constexpr int16_t deg_90 = 16384;
 		static constexpr int32_t deg_180 = 32768;
 
-		static c_rot from_rad(float angle_rad)
+		static constexpr c_rot from_rad(long double angle_rad)
 		{
-			return (int16_t)(angle_rad * (float)deg_180 / std::numbers::pi_v<float>);
+			return (int16_t)(angle_rad * (long double)deg_180 / std::numbers::pi_v<long double>);
 		}
 
-		static c_rot from_deg(float angle_deg)
+		static constexpr c_rot from_deg(long double angle_deg)
 		{
-			return (int16_t)(angle_deg * (float)deg_45 / 45.f);
+			return (int16_t)(angle_deg * (long double)deg_45 / 45.f);
 		}
 
 	public:
-		c_rot()
+		constexpr c_rot()
 			: m_angle(0)
 		{
 		}
 
-		c_rot(int16_t angle)
+		constexpr c_rot(int16_t angle)
 			: m_angle(angle)
 		{
 		}
 
-		int16_t angle() const
+		constexpr int16_t angle() const
 		{
 			return m_angle;
 		}
 
-		int16_t& angle()
+		constexpr int16_t& angle()
 		{
 			return m_angle;
 		}
 
-		float angle_rad() const
+		constexpr long double angle_rad() const
 		{
-			return (float)m_angle * std::numbers::pi_v<float> / (float)deg_180;
+			return (long double)m_angle * std::numbers::pi_v<long double> / (long double)deg_180;
 		}
 
-		float angle_deg() const
+		constexpr long double angle_deg() const
 		{
-			return (float)m_angle / (float)deg_45 * 45.f;
+			return (long double)m_angle / (long double)deg_45 * 45.f;
 		}
 
 		void set_rad(float angle_rad)
@@ -263,19 +266,61 @@ export namespace stk
 			m_angle = (int16_t)(angle_deg * (float)deg_45 / 45.f);
 		}
 
-		bool operator==(c_rot const& other) const
+		constexpr bool operator==(c_rot const& other) const
 		{
 			return m_angle == other.m_angle;
 		}
 
-		bool operator!=(c_rot const& other) const
+		constexpr bool operator!=(c_rot const& other) const
 		{
 			return m_angle != other.m_angle;
 		}
 
-		c_rot operator+(c_rot const& other) const
+		constexpr c_rot operator+(c_rot const& other) const
 		{
 			return c_rot(m_angle + other.m_angle);
+		}
+
+		constexpr c_rot operator-(c_rot const& other) const
+		{
+			return c_rot(m_angle - other.m_angle);
+		}
+
+		constexpr c_rot operator-() const
+		{
+			return c_rot(-m_angle);
+		}
+
+		c_rot& operator+=(c_rot const& other)
+		{
+			m_angle += other.m_angle;
+			return *this;
+		}
+
+		c_rot& operator-=(c_rot const& other)
+		{
+			m_angle -= other.m_angle;
+			return *this;
+		}
+
+		[[nodiscard]] constexpr c_vec2f rot(c_vec2f const vec) const
+		{
+			float x = vec.x();
+			float y = vec.y();
+			long double rad = angle_rad();
+			auto cos = gcem::cos(rad);
+			auto sin = gcem::sin(rad);
+			return { static_cast<float>(cos * x - y * sin), static_cast<float>((sin * x + y * cos)) };
+		}
+
+ 		[[nodiscard]] constexpr c_vec2i rot(c_vec2i const vec) const
+		{
+			int32_t x = vec.x();
+			int32_t y = vec.y();
+			long double rad = angle_rad();
+			auto cos = gcem::cos(rad);
+			auto sin = gcem::sin(rad);
+			return { static_cast<int32_t>(cos * x - sin * y), static_cast<int32_t>(sin * x + cos * y) };
 		}
 
 	private:
@@ -286,5 +331,15 @@ export namespace stk
 	{
 		return std::abs(a_center.x() - b_center.x()) < a_extents.x() / 2 + b_extents.x() / 2
 			&& std::abs(a_center.y() - b_center.y()) < a_extents.y() / 2 + b_extents.y() / 2;
+	}
+
+	constexpr c_rot operator "" _deg(long double degrees)
+	{
+		return c_rot::from_deg(degrees);
+	}
+
+	constexpr c_rot operator "" _rad(long double radians)
+	{
+		return c_rot::from_rad(radians);
 	}
 }

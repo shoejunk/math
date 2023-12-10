@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
 project(
 	math
-	VERSION 4.7.0
+	VERSION 4.8.0
 	LANGUAGES CXX)
 
 # ---- Fetch CPM ----
@@ -32,6 +32,13 @@ CPMAddPackage(
 	VERSION 1.3.0
 )
 
+# Add package: kthohr/gcem
+CPMAddPackage(
+	NAME gcem
+	GITHUB_REPOSITORY kthohr/gcem
+	VERSION 1.17.0
+)
+
 # ---- Add source files ----
 file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*.ixx")
 
@@ -45,7 +52,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 23)
 # being a cross-platform target, we enforce standards conformance on MSVC
 target_compile_options(${PROJECT_NAME} PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->;/experimental:module")
 
-target_link_libraries(${PROJECT_NAME} log)
+target_link_libraries(${PROJECT_NAME} log gcem)
 
 target_include_directories(
   ${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>

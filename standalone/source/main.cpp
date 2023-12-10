@@ -60,22 +60,26 @@ int main(int argc, char* argv[])
 	int32_t test_sorted[] = { 10, 9, 8, 8, 7, 7, 6, 6, 5, 5, 4, 4, 4, 3, 3, 2, 2, 1, 0, -1 };
 	auto size_sorted = sizeof(test_sorted) / sizeof(int32_t);
 
-	c_vec2i v1(1, 2);
-	c_vec2f v2 = c_vec2f(v1);
+	constexpr c_vec2i v1(1, 2);
+	constexpr c_vec2f v2 = c_vec2f(v1);
 
-	c_rot angle = c_rot::from_deg(90.f);
-	c_rot angle2 = c_rot::from_rad(std::numbers::pi_v<float> / 2.f);
-	c_rot angle3 = c_rot::from_deg(180.f);
-	c_rot angle4 = c_rot::from_rad(std::numbers::pi_v<float>);
-	assert(angle == angle2);
-	assert(angle + angle2 == angle3);
-	assert(angle3 == angle4);
+	constexpr c_rot angle = 90._deg;
+	constexpr c_rot angle2 = c_rot::from_rad(std::numbers::pi_v<long double> / 2L);
+	constexpr c_rot angle3 = 180._deg;
+	constexpr c_rot angle4 = c_rot::from_rad(std::numbers::pi_v<long double>);
+	static_assert(angle == angle2);
+	static_assert(angle + angle2 == angle3);
+	static_assert(angle3 == angle4);
 
+	constexpr c_vec2i v3 = angle.rot(v1);
+	static_assert(v3 == c_vec2i(-2, 1));
+	
 	// True Reals:
 	c_true_real tr1(std::numeric_limits<uint64_t>::max());
 	debugln("tr1: {}", tr1);
 	c_true_real tr2(1);
 	c_true_real tr3 = tr1 + tr2;
 	debugln("tr3: {}", tr3);
+	debugln("tr3 method 2: {}", tr3.to_string());
 	return 0;
 }

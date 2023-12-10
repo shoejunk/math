@@ -40,16 +40,54 @@ namespace stk
 			return result;
 		}
 
-		// Print function for convenience
-		void print() const
-		{
-			debugln("{}", *this);
+		std::string to_string() const {
+			if (parts.size() != 2) {
+				return "0";
+			}
 
-			//for (auto it = parts.rbegin(); it != parts.rend(); ++it)
-			//{
-			//	debug("{} ", *it);
-			//}
-			//debugln("");
+			const uint64_t base = 10000000000000000000ULL; // 10^19, close to 2^64
+			std::string result;
+			uint64_t high_copy = parts[1];
+			uint64_t low_copy = parts[0];
+
+			while (high_copy != 0 || low_copy != 0) {
+				uint64_t remainder = 0;
+				divide_by_base(high_copy, low_copy, base, remainder);
+
+				// Prepend the remainder to the result string.
+				// When high is not zero, we need to ensure full groups of digits.
+				std::string part = std::to_string(remainder);
+				if (high_copy != 0 || low_copy != 0) {
+					part.insert(part.begin(), 19 - part.length(), '0');
+				}
+				result = part + result;
+			}
+
+			return result;
+		}
+
+		// Divides the 128-bit number by the base, modifying the high and low parts, and sets the remainder.
+		void divide_by_base(uint64_t& high, uint64_t& low, uint64_t base, uint64_t& remainder) const {
+			uint64_t temp_high = high;
+			uint64_t temp_low = low;
+
+			high = 0;
+			low = 0;
+			remainder = 0;
+
+			for (int i = 63; i >= 0; --i) {
+				remainder = (remainder << 1) | ((temp_high >> i) & 1);
+				if (remainder >= base) {
+					remainder -= base;
+					high |= (1ULL << i);
+				}
+
+				remainder = (remainder << 1) | ((temp_low >> i) & 1);
+				if (remainder >= base) {
+					remainder -= base;
+					low |= (1ULL << i);
+				}
+			}
 		}
 
 	private:
@@ -73,19 +111,19 @@ struct std::formatter<stk::c_true_real>
 		std::string formatted_value;
 		bool first = true;
 
-		for (auto it = value.parts.rbegin(); it != value.parts.rend(); ++it)
+		for (auto part : value.parts)
 		{
 			// For the most significant part, don't pad with zeros
 			if (first)
 			{
-				formatted_value += std::format("{}", *it);
+				formatted_value += std::format("{}", part);
 				first = false;
 			}
 			else
 			{
 				// For other parts, pad with zeros to a fixed width
 				// Assuming each part is a 64-bit integer, pad to 20 digits (maximum for uint64_t)
-				formatted_value += std::format("{:020}", *it);
+				formatted_value += std::format("{:020}", part);
 			}
 		}
 		return format_to(ctx.out(), "{}", formatted_value);
