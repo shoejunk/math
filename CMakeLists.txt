@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
 project(
 	math
-	VERSION 4.9.0
+	VERSION 4.9.1
 	LANGUAGES CXX)
 
 # ---- Fetch CPM ----
@@ -29,7 +29,7 @@ CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.8.0")
 CPMAddPackage(
 	NAME log
 	GITHUB_REPOSITORY shoejunk/log
-	VERSION 1.3.0
+	VERSION 1.3.1
 )
 
 # Add package: kthohr/gcem
