@@ -65,21 +65,23 @@ int main(int argc, char* argv[])
 
 	constexpr c_rot angle = 90._deg;
 	constexpr c_rot angle2 = c_rot::from_rad(std::numbers::pi_v<long double> / 2L);
-	constexpr c_rot angle3 = 180._deg;
+	constexpr c_rot angle3 = 180_deg;
 	constexpr c_rot angle4 = c_rot::from_rad(std::numbers::pi_v<long double>);
+	constexpr c_rot angle5 = -90_deg;
+	constexpr c_rot angle6 = 270.0_deg;
 	static_assert(angle == angle2);
 	static_assert(angle + angle2 == angle3);
 	static_assert(angle3 == angle4);
-
+	static_assert(angle5 == angle6);
+	static_assert(-2_rad + 1.5_rad == -0.5_rad);
 	constexpr c_vec2i v3 = angle.rot(v1);
 	static_assert(v3 == c_vec2i(-2, 1));
 	
 	// True Reals:
 	c_true_real tr1(std::numeric_limits<uint64_t>::max());
-	debugln("tr1: {}", tr1);
+	debugln("tr1: {}", tr1.to_string());
 	c_true_real tr2(1);
 	c_true_real tr3 = tr1 + tr2;
-	debugln("tr3: {}", tr3);
-	debugln("tr3 method 2: {}", tr3.to_string());
+	debugln("tr3: {}", tr3.to_string());
 	return 0;
 }

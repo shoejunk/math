@@ -40,57 +40,28 @@ namespace stk
 			return result;
 		}
 
-		std::string to_string() const {
-			if (parts.size() != 2) {
-				return "0";
-			}
-
-			const uint64_t base = 10000000000000000000ULL; // 10^19, close to 2^64
-			std::string result;
-			uint64_t high_copy = parts[1];
-			uint64_t low_copy = parts[0];
-
-			while (high_copy != 0 || low_copy != 0) {
-				uint64_t remainder = 0;
-				divide_by_base(high_copy, low_copy, base, remainder);
-
-				// Prepend the remainder to the result string.
-				// When high is not zero, we need to ensure full groups of digits.
-				std::string part = std::to_string(remainder);
-				if (high_copy != 0 || low_copy != 0) {
-					part.insert(part.begin(), 19 - part.length(), '0');
-				}
-				result = part + result;
-			}
-
-			return result;
-		}
-
-		// Divides the 128-bit number by the base, modifying the high and low parts, and sets the remainder.
-		void divide_by_base(uint64_t& high, uint64_t& low, uint64_t base, uint64_t& remainder) const {
-			uint64_t temp_high = high;
-			uint64_t temp_low = low;
-
-			high = 0;
-			low = 0;
-			remainder = 0;
-
-			for (int i = 63; i >= 0; --i) {
-				remainder = (remainder << 1) | ((temp_high >> i) & 1);
-				if (remainder >= base) {
-					remainder -= base;
-					high |= (1ULL << i);
-				}
-
-				remainder = (remainder << 1) | ((temp_low >> i) & 1);
-				if (remainder >= base) {
-					remainder -= base;
-					low |= (1ULL << i);
+		std::string to_string() const
+		{
+			std::string res;
+			for (auto part : parts)
+			{
+				while (part > 0)
+				{
+					char digit = pop_digit(part);
+					res = digit + res;
 				}
 			}
+			return res;
 		}
 
 	private:
+		char pop_digit(uint64_t& part) const
+		{
+			uint64_t digit = part % 10;
+			part /= 10;
+			return '0' + digit;
+		}
+
 		friend struct std::formatter<c_true_real>;
 		std::vector<uint64_t> parts;
 	};

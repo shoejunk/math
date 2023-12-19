@@ -338,7 +338,17 @@ export namespace stk
 		return c_rot::from_deg(degrees);
 	}
 
+	constexpr c_rot operator "" _deg(unsigned long long degrees)
+	{
+		return c_rot::from_deg(degrees);
+	}
+
 	constexpr c_rot operator "" _rad(long double radians)
+	{
+		return c_rot::from_rad(radians);
+	}
+
+	constexpr c_rot operator "" _rad(unsigned long long radians)
 	{
 		return c_rot::from_rad(radians);
 	}
