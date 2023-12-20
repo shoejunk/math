@@ -29,7 +29,8 @@ CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.8.0")
 CPMAddPackage(
 	NAME log
 	GITHUB_REPOSITORY shoejunk/log
-	VERSION 1.3.1
+	#VERSION 1.3.1
+	GIT_VERSION main
 )
 
 # Add package: kthohr/gcem
