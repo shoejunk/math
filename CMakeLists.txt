@@ -30,7 +30,7 @@ CPMAddPackage(
 	NAME log
 	GITHUB_REPOSITORY shoejunk/log
 	#VERSION 1.3.1
-	GIT_VERSION main
+	GIT_TAG main
 )
 
 # Add package: kthohr/gcem
