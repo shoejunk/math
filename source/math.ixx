@@ -207,7 +207,7 @@ export namespace stk
 	using c_vec2i = c_vec2<int32_t>;
 	using c_vec2f = c_vec2<float>;
 
-	class c_rot
+	class c_angle
 	{
 	public:
 		static constexpr int16_t deg_0 = 0;
@@ -215,23 +215,23 @@ export namespace stk
 		static constexpr int16_t deg_90 = 16384;
 		static constexpr int32_t deg_180 = 32768;
 
-		static constexpr c_rot from_rad(long double angle_rad)
+		static constexpr c_angle from_rad(long double angle_rad)
 		{
 			return (int16_t)(angle_rad * (long double)deg_180 / std::numbers::pi_v<long double>);
 		}
 
-		static constexpr c_rot from_deg(long double angle_deg)
+		static constexpr c_angle from_deg(long double angle_deg)
 		{
 			return (int16_t)(angle_deg * (long double)deg_45 / 45.f);
 		}
 
 	public:
-		constexpr c_rot()
+		constexpr c_angle()
 			: m_angle(0)
 		{
 		}
 
-		constexpr c_rot(int16_t angle)
+		constexpr c_angle(int16_t angle)
 			: m_angle(angle)
 		{
 		}
@@ -266,38 +266,38 @@ export namespace stk
 			m_angle = (int16_t)(angle_deg * (float)deg_45 / 45.f);
 		}
 
-		constexpr bool operator==(c_rot const& other) const
+		constexpr bool operator==(c_angle const& other) const
 		{
 			return m_angle == other.m_angle;
 		}
 
-		constexpr bool operator!=(c_rot const& other) const
+		constexpr bool operator!=(c_angle const& other) const
 		{
 			return m_angle != other.m_angle;
 		}
 
-		constexpr c_rot operator+(c_rot const& other) const
+		constexpr c_angle operator+(c_angle const& other) const
 		{
-			return c_rot(m_angle + other.m_angle);
+			return c_angle(m_angle + other.m_angle);
 		}
 
-		constexpr c_rot operator-(c_rot const& other) const
+		constexpr c_angle operator-(c_angle const& other) const
 		{
-			return c_rot(m_angle - other.m_angle);
+			return c_angle(m_angle - other.m_angle);
 		}
 
-		constexpr c_rot operator-() const
+		constexpr c_angle operator-() const
 		{
-			return c_rot(-m_angle);
+			return c_angle(-m_angle);
 		}
 
-		c_rot& operator+=(c_rot const& other)
+		c_angle& operator+=(c_angle const& other)
 		{
 			m_angle += other.m_angle;
 			return *this;
 		}
 
-		c_rot& operator-=(c_rot const& other)
+		c_angle& operator-=(c_angle const& other)
 		{
 			m_angle -= other.m_angle;
 			return *this;
@@ -333,23 +333,23 @@ export namespace stk
 			&& std::abs(a_center.y() - b_center.y()) < a_extents.y() / 2 + b_extents.y() / 2;
 	}
 
-	constexpr c_rot operator "" _deg(long double degrees)
+	constexpr c_angle operator "" _deg(long double degrees)
 	{
-		return c_rot::from_deg(degrees);
+		return c_angle::from_deg(degrees);
 	}
 
-	constexpr c_rot operator "" _deg(unsigned long long degrees)
+	constexpr c_angle operator "" _deg(unsigned long long degrees)
 	{
-		return c_rot::from_deg(degrees);
+		return c_angle::from_deg(degrees);
 	}
 
-	constexpr c_rot operator "" _rad(long double radians)
+	constexpr c_angle operator "" _rad(long double radians)
 	{
-		return c_rot::from_rad(radians);
+		return c_angle::from_rad(radians);
 	}
 
-	constexpr c_rot operator "" _rad(unsigned long long radians)
+	constexpr c_angle operator "" _rad(unsigned long long radians)
 	{
-		return c_rot::from_rad(radians);
+		return c_angle::from_rad(radians);
 	}
 }

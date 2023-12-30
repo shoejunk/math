@@ -63,12 +63,12 @@ int main(int argc, char* argv[])
 	constexpr c_vec2i v1(1, 2);
 	constexpr c_vec2f v2 = c_vec2f(v1);
 
-	constexpr c_rot angle = 90._deg;
-	constexpr c_rot angle2 = c_rot::from_rad(std::numbers::pi_v<long double> / 2L);
-	constexpr c_rot angle3 = 180_deg;
-	constexpr c_rot angle4 = c_rot::from_rad(std::numbers::pi_v<long double>);
-	constexpr c_rot angle5 = -90_deg;
-	constexpr c_rot angle6 = 270.0_deg;
+	constexpr c_angle angle = 90._deg;
+	constexpr c_angle angle2 = c_angle::from_rad(std::numbers::pi_v<long double> / 2L);
+	constexpr c_angle angle3 = 180_deg;
+	constexpr c_angle angle4 = c_angle::from_rad(std::numbers::pi_v<long double>);
+	constexpr c_angle angle5 = -90_deg;
+	constexpr c_angle angle6 = 270.0_deg;
 	static_assert(angle == angle2);
 	static_assert(angle + angle2 == angle3);
 	static_assert(angle3 == angle4);
