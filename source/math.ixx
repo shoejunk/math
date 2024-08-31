@@ -362,6 +362,7 @@ export namespace stk
 		s,
 		sw,
 		w,
-		nw
+		nw,
+		count
 	};
 }
