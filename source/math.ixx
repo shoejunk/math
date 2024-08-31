@@ -352,4 +352,16 @@ export namespace stk
 	{
 		return c_angle::from_rad(radians);
 	}
+
+	enum class e_compass_direction : uint8_t
+	{
+		n,
+		ne,
+		e,
+		se,
+		s,
+		sw,
+		w,
+		nw
+	};
 }
