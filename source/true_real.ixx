@@ -1,5 +1,5 @@
 export module stk.math:true_real;
-import std.core;
+import std;
 import stk.log;
 
 using namespace stk;
@@ -10,7 +10,7 @@ namespace stk
 	class c_true_real
 	{
 	public:
-		explicit c_true_real(uint64_t value = 0)
+		explicit c_true_real(std::uint64_t value = 0)
 		{
 			parts.push_back(value);
 		}
@@ -20,11 +20,11 @@ namespace stk
 		{
 			c_true_real result;
 			result.parts.resize(std::max(parts.size(), rhs.parts.size()), 0);
-			uint64_t carry = 0;
+			std::uint64_t carry = 0;
 			for (size_t i = 0; i < result.parts.size(); ++i)
 			{
-				uint64_t partThis = i < parts.size() ? parts[i] : 0;
-				uint64_t partRhs = i < rhs.parts.size() ? rhs.parts[i] : 0;
+				std::uint64_t partThis = i < parts.size() ? parts[i] : 0;
+				std::uint64_t partRhs = i < rhs.parts.size() ? rhs.parts[i] : 0;
 				result.parts[i] = partThis + partRhs + carry;
 
 				// Determine if a carry is needed
@@ -55,15 +55,15 @@ namespace stk
 		}
 
 	private:
-		char pop_digit(uint64_t& part) const
+		char pop_digit(std::uint64_t& part) const
 		{
-			uint64_t digit = part % 10;
+			std::uint64_t digit = part % 10;
 			part /= 10;
 			return '0' + digit;
 		}
 
 		friend struct std::formatter<c_true_real>;
-		std::vector<uint64_t> parts;
+		std::vector<std::uint64_t> parts;
 	};
 }
 
@@ -93,7 +93,7 @@ struct std::formatter<stk::c_true_real>
 			else
 			{
 				// For other parts, pad with zeros to a fixed width
-				// Assuming each part is a 64-bit integer, pad to 20 digits (maximum for uint64_t)
+				// Assuming each part is a 64-bit integer, pad to 20 digits (maximum for std::uint64_t)
 				formatted_value += std::format("{:020}", part);
 			}
 		}

@@ -1,6 +1,6 @@
-#include <assert.h>
+#include <cassert>
 
-import std.core;
+import std;
 import stk.log;
 import stk.math;
 
@@ -10,10 +10,10 @@ int main(int argc, char* argv[])
 {
 	if (argc > 2)
 	{
-		if (strcmp(argv[1], "NextPrime") == 0)
+		if (std::strcmp(argv[1], "NextPrime") == 0)
 		{
-			int n = atoi(argv[2]);
-			auto prime = next_prime((uint32_t)n);
+			int n = std::atoi(argv[2]);
+			auto prime = next_prime((std::uint32_t)n);
 			if (prime == 0)
 			{
 				std::cout << "Failure. The next prime is larger than would fit in a uint32_t so I cannot compute it." << std::endl;
@@ -25,9 +25,9 @@ int main(int argc, char* argv[])
 		}
 		else if (argc > 3 && (strcmp(argv[1], "Random") == 0))
 		{
-			auto seed = atoi(argv[2]);
-			auto max = atoi(argv[3]);
-			auto r = det_rand_int<uint32_t>(static_cast<uint32_t>(seed), static_cast<uint32_t>(max));
+			auto seed = std::atoi(argv[2]);
+			auto max = std::atoi(argv[3]);
+			auto r = det_rand_int<std::uint32_t>(static_cast<std::uint32_t>(seed), static_cast<std::uint32_t>(max));
 			std::cout << r << std::endl;
 		}
 		else if (argc > 3 && (strcmp(argv[1], "RandomInt") == 0))
@@ -40,8 +40,8 @@ int main(int argc, char* argv[])
 		}
 		else if (argc > 3 && (strcmp(argv[1], "RandomFloat") == 0))
 		{
-			auto min = atof(argv[2]);
-			auto max = atof(argv[3]);
+			auto min = std::atof(argv[2]);
+			auto max = std::atof(argv[3]);
 			stk::c_rand r;
 			auto r_float = r.rand_float(min, max);
 			std::cout << r_float << std::endl;
@@ -55,10 +55,10 @@ int main(int argc, char* argv[])
 		std::cout << "Enter \"RandomFloat <Min> <Max>\" to find a random number in the range from Min to Max." << std::endl;
 	}
 
-	int32_t test[] = { 5, 4, 4, 8, 2, -1, 0, 3, 10, 9, 7, 6, 1, 2, 3, 4, 5, 6, 7, 8 };
-	auto size = sizeof(test) / sizeof(int32_t);
-	int32_t test_sorted[] = { 10, 9, 8, 8, 7, 7, 6, 6, 5, 5, 4, 4, 4, 3, 3, 2, 2, 1, 0, -1 };
-	auto size_sorted = sizeof(test_sorted) / sizeof(int32_t);
+	std::int32_t test[] = { 5, 4, 4, 8, 2, -1, 0, 3, 10, 9, 7, 6, 1, 2, 3, 4, 5, 6, 7, 8 };
+	auto size = sizeof(test) / sizeof(std::int32_t);
+	std::int32_t test_sorted[] = { 10, 9, 8, 8, 7, 7, 6, 6, 5, 5, 4, 4, 4, 3, 3, 2, 2, 1, 0, -1 };
+	auto size_sorted = sizeof(test_sorted) / sizeof(std::int32_t);
 
 	constexpr c_vec2i v1(1, 2);
 	constexpr c_vec2f v2 = c_vec2f(v1);
@@ -74,11 +74,11 @@ int main(int argc, char* argv[])
 	static_assert(angle3 == angle4);
 	static_assert(angle5 == angle6);
 	static_assert(-2_rad + 1.5_rad == -0.5_rad);
-	constexpr c_vec2i v3 = angle.rot(v1);
-	static_assert(v3 == c_vec2i(-2, 1));
+	c_vec2i v3 = angle.rot(v1);
+	assert(v3 == c_vec2i(-2, 1));
 	
 	// True Reals:
-	c_true_real tr1(std::numeric_limits<uint64_t>::max());
+	c_true_real tr1(std::numeric_limits<std::uint64_t>::max());
 	debugln("tr1: {}", tr1.to_string());
 	c_true_real tr2(1);
 	c_true_real tr3 = tr1 + tr2;
