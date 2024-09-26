@@ -2,11 +2,6 @@ cmake_minimum_required(VERSION 3.14...3.22)
 
 project(math_standalone LANGUAGES CXX)
 
-if(MSVC)
-	# I haven't figured out how to resolve this warning when importing std.core.
-    add_compile_options("/wd5050")
-endif()
-
 # --- Import tools ----
 
 include(../cmake/tools.cmake)
