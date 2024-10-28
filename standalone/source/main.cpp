@@ -64,9 +64,9 @@ int main(int argc, char* argv[])
 	constexpr c_vec2f v2 = c_vec2f(v1);
 
 	constexpr c_angle angle = 90._deg;
-	constexpr c_angle angle2 = c_angle::from_rad(se::numbers::pi_v<long double> / 2L);
+	constexpr c_angle angle2 = c_angle::from_rad(se::pi_v<long double> / 2L);
 	constexpr c_angle angle3 = 180_deg;
-	constexpr c_angle angle4 = c_angle::from_rad(se::numbers::pi_v<long double>);
+	constexpr c_angle angle4 = c_angle::from_rad(se::pi_v<long double>);
 	constexpr c_angle angle5 = -90_deg;
 	constexpr c_angle angle6 = 270.0_deg;
 	static_assert(angle == angle2);

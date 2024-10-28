@@ -48,7 +48,7 @@ namespace stk
 				while (part > 0)
 				{
 					char digit = pop_digit(part);
-					res = digit + res;
+					res.insert(0, 1, digit);
 				}
 			}
 			return res;

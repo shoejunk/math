@@ -216,7 +216,7 @@ export namespace stk
 
 		static constexpr c_angle from_rad(long double angle_rad)
 		{
-			return (se::int16_t)(angle_rad * (long double)deg_180 / se::numbers::pi_v<long double>);
+			return (se::int16_t)(angle_rad * (long double)deg_180 / se::pi_v<long double>);
 		}
 
 		static constexpr c_angle from_deg(long double angle_deg)
