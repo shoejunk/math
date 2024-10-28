@@ -1,5 +1,5 @@
 export module stk.math:true_real;
-import std;
+import se;
 import stk.log;
 
 using namespace stk;
@@ -10,7 +10,7 @@ namespace stk
 	class c_true_real
 	{
 	public:
-		explicit c_true_real(std::uint64_t value = 0)
+		explicit c_true_real(se::uint64_t value = 0)
 		{
 			parts.push_back(value);
 		}
@@ -19,12 +19,12 @@ namespace stk
 		c_true_real operator+(c_true_real const& rhs) const
 		{
 			c_true_real result;
-			result.parts.resize(std::max(parts.size(), rhs.parts.size()), 0);
-			std::uint64_t carry = 0;
+			result.parts.resize(se::max(parts.size(), rhs.parts.size()), 0);
+			se::uint64_t carry = 0;
 			for (size_t i = 0; i < result.parts.size(); ++i)
 			{
-				std::uint64_t partThis = i < parts.size() ? parts[i] : 0;
-				std::uint64_t partRhs = i < rhs.parts.size() ? rhs.parts[i] : 0;
+				se::uint64_t partThis = i < parts.size() ? parts[i] : 0;
+				se::uint64_t partRhs = i < rhs.parts.size() ? rhs.parts[i] : 0;
 				result.parts[i] = partThis + partRhs + carry;
 
 				// Determine if a carry is needed
@@ -40,9 +40,9 @@ namespace stk
 			return result;
 		}
 
-		std::string to_string() const
+		se::string to_string() const
 		{
-			std::string res;
+			se::string res;
 			for (auto part : parts)
 			{
 				while (part > 0)
@@ -55,20 +55,20 @@ namespace stk
 		}
 
 	private:
-		char pop_digit(std::uint64_t& part) const
+		char pop_digit(se::uint64_t& part) const
 		{
-			std::uint64_t digit = part % 10;
+			se::uint64_t digit = part % 10;
 			part /= 10;
 			return '0' + digit;
 		}
 
-		friend struct std::formatter<c_true_real>;
-		std::vector<std::uint64_t> parts;
+		friend struct se::formatter<c_true_real>;
+		se::vector<se::uint64_t> parts;
 	};
 }
 
 template<>
-struct std::formatter<stk::c_true_real>
+struct se::formatter<stk::c_true_real>
 {
 	template<class ParseContext>
 	constexpr auto parse(ParseContext& ctx)
@@ -79,7 +79,7 @@ struct std::formatter<stk::c_true_real>
 	template<class FormatContext>
 	auto format(const stk::c_true_real& value, FormatContext& ctx)
 	{
-		std::string formatted_value;
+		se::string formatted_value;
 		bool first = true;
 
 		for (auto part : value.parts)
@@ -87,14 +87,14 @@ struct std::formatter<stk::c_true_real>
 			// For the most significant part, don't pad with zeros
 			if (first)
 			{
-				formatted_value += std::format("{}", part);
+				formatted_value += se::format("{}", part);
 				first = false;
 			}
 			else
 			{
 				// For other parts, pad with zeros to a fixed width
-				// Assuming each part is a 64-bit integer, pad to 20 digits (maximum for std::uint64_t)
-				formatted_value += std::format("{:020}", part);
+				// Assuming each part is a 64-bit integer, pad to 20 digits (maximum for se::uint64_t)
+				formatted_value += se::format("{:020}", part);
 			}
 		}
 		return format_to(ctx.out(), "{}", formatted_value);

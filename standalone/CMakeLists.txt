@@ -18,6 +18,14 @@ CPMAddPackage(
 
 CPMAddPackage(NAME math SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
 
+# Add package: shoejunk/se
+CPMAddPackage(
+	NAME se
+	GITHUB_REPOSITORY shoejunk/se
+	#VERSION 1.3.1
+	GIT_TAG main
+)
+
 # Add package: shoejunk/log
 CPMAddPackage(
 	NAME log
@@ -34,4 +42,4 @@ add_executable(${PROJECT_NAME} ${sources})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 23 OUTPUT_NAME "math")
 
-target_link_libraries(${PROJECT_NAME} cxxopts math log)
+target_link_libraries(${PROJECT_NAME} cxxopts math se log)

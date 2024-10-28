@@ -1,12 +1,12 @@
 export module stk.math;
 export import :true_real;
 
-import std;
+import se;
 
 export namespace stk
 {
 	// Returns the next prime number after x. Returns 0 if there is no prime number after uX that fits in a uint32_t.
-	constexpr std::uint32_t next_prime(std::uint32_t x)
+	constexpr se::uint32_t next_prime(se::uint32_t x)
 	{
 		if (x < 2)
 			return 2;
@@ -51,18 +51,18 @@ export namespace stk
 
 	// constexpr and deterministic random number generator.
 	template<class T>
-	constexpr T det_rand_int(T seed, T max = std::numeric_limits<T>::max())
+	constexpr T det_rand_int(T seed, T max = se::numeric_limits<T>::max())
 	{
-		static_assert(std::is_integral_v<T>, "T must be an integral type");
+		static_assert(se::is_integral_v<T>, "T must be an integral type");
 		if (max == 0)
 		{
 			return 0;
 		}
 		return (seed * 1664525 + 1013904223) % max;
 	}
-	static_assert(det_rand_int<std::uint32_t>(0, 1) == 0);
-	static_assert(det_rand_int<std::uint64_t>(0, 10000) == 4223);
-	static_assert(det_rand_int<std::uint32_t>(1, 10000) == 8748);
+	static_assert(det_rand_int<se::uint32_t>(0, 1) == 0);
+	static_assert(det_rand_int<se::uint64_t>(0, 10000) == 4223);
+	static_assert(det_rand_int<se::uint32_t>(1, 10000) == 8748);
 
 	// Uses the device to generate a non-deterministic random number
 	class c_rand
@@ -71,32 +71,32 @@ export namespace stk
 		c_rand() : m_engine(m_device()) {}
 
 		template<class T>
-		T rand_int(T min = std::numeric_limits<T>::min(), T max = std::numeric_limits<T>::max())
+		T rand_int(T min = se::numeric_limits<T>::min(), T max = se::numeric_limits<T>::max())
 		{
-			static_assert(std::is_integral_v<T>, "T must be an integral type");
+			static_assert(se::is_integral_v<T>, "T must be an integral type");
 			if (min > max)
 			{
-				std::swap(min, max);
+				se::swap(min, max);
 			}
-			std::uniform_int_distribution<T> dist(min, max);
+			se::uniform_int_distribution<T> dist(min, max);
 			return dist(m_engine);
 		}
 
 		template<class T>
 		T rand_float(T min, T max)
 		{
-			static_assert(std::is_floating_point_v<T>, "T must be a floating-point type");
+			static_assert(se::is_floating_point_v<T>, "T must be a floating-point type");
 			if (min > max)
 			{
-				std::swap(min, max);
+				se::swap(min, max);
 			}
-			std::uniform_real_distribution<T> dist(min, max);
+			se::uniform_real_distribution<T> dist(min, max);
 			return dist(m_engine);
 		}
 
 	private:
-		std::random_device m_device;
-		std::mt19937 m_engine;
+		se::random_device m_device;
+		se::mt19937 m_engine;
 	};
 
 	template<class T>
@@ -203,25 +203,25 @@ export namespace stk
 		T m_y;
 	};
 
-	using c_vec2i = c_vec2<std::int32_t>;
+	using c_vec2i = c_vec2<se::int32_t>;
 	using c_vec2f = c_vec2<float>;
 
 	class c_angle
 	{
 	public:
-		static constexpr std::int16_t deg_0 = 0;
-		static constexpr std::int16_t deg_45 = 8192;
-		static constexpr std::int16_t deg_90 = 16384;
-		static constexpr std::int32_t deg_180 = 32768;
+		static constexpr se::int16_t deg_0 = 0;
+		static constexpr se::int16_t deg_45 = 8192;
+		static constexpr se::int16_t deg_90 = 16384;
+		static constexpr se::int32_t deg_180 = 32768;
 
 		static constexpr c_angle from_rad(long double angle_rad)
 		{
-			return (std::int16_t)(angle_rad * (long double)deg_180 / std::numbers::pi_v<long double>);
+			return (se::int16_t)(angle_rad * (long double)deg_180 / se::numbers::pi_v<long double>);
 		}
 
 		static constexpr c_angle from_deg(long double angle_deg)
 		{
-			return (std::int16_t)(angle_deg * (long double)deg_45 / 45.f);
+			return (se::int16_t)(angle_deg * (long double)deg_45 / 45.f);
 		}
 
 	public:
@@ -247,7 +247,7 @@ export namespace stk
 
 		constexpr long double angle_rad() const
 		{
-			return (long double)m_angle * std::numbers::pi_v<long double> / (long double)deg_180;
+			return (long double)m_angle * se::numbers::pi_v<long double> / (long double)deg_180;
 		}
 
 		constexpr long double angle_deg() const
@@ -257,7 +257,7 @@ export namespace stk
 
 		void set_rad(float angle_rad)
 		{
-			m_angle = (int16_t)(angle_rad * (float)deg_180 / std::numbers::pi_v<float>);
+			m_angle = (int16_t)(angle_rad * (float)deg_180 / se::numbers::pi_v<float>);
 		}
 
 		void set_deg(float angle_deg)
@@ -307,8 +307,8 @@ export namespace stk
 			float x = vec.x();
 			float y = vec.y();
 			long double rad = angle_rad();
-			auto cos = std::cos(rad);
-			auto sin = std::sin(rad);
+			auto cos = se::cos(rad);
+			auto sin = se::sin(rad);
 			return { static_cast<float>(cos * x - y * sin), static_cast<float>((sin * x + y * cos)) };
 		}
 
@@ -317,8 +317,8 @@ export namespace stk
 			int32_t x = vec.x();
 			int32_t y = vec.y();
 			long double rad = angle_rad();
-			auto cos = std::cos(rad);
-			auto sin = std::sin(rad);
+			auto cos = se::cos(rad);
+			auto sin = se::sin(rad);
 			return { static_cast<int32_t>(cos * x - sin * y), static_cast<int32_t>(sin * x + cos * y) };
 		}
 
@@ -328,8 +328,8 @@ export namespace stk
 
 	bool overlaps(c_vec2i a_center, c_vec2i a_extents, c_vec2i b_center, c_vec2i b_extents)
 	{
-		return std::abs(a_center.x() - b_center.x()) < a_extents.x() / 2 + b_extents.x() / 2
-			&& std::abs(a_center.y() - b_center.y()) < a_extents.y() / 2 + b_extents.y() / 2;
+		return se::abs(a_center.x() - b_center.x()) < a_extents.x() / 2 + b_extents.x() / 2
+			&& se::abs(a_center.y() - b_center.y()) < a_extents.y() / 2 + b_extents.y() / 2;
 	}
 
 	constexpr c_angle operator "" _deg(long double degrees)
@@ -352,7 +352,7 @@ export namespace stk
 		return c_angle::from_rad(radians);
 	}
 
-	enum class e_compass_direction : std::uint8_t
+	enum class e_compass_direction : se::uint8_t
 	{
 		n,
 		ne,
